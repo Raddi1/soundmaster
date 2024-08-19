@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Favorites</title>
+    <style>
+        body {
+            background-color: #111;
+            color: #ff7000;
+            font-family: sans-serif;
+            margin: 0;
+            padding-top: 60px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 10px 20px;
+            background-color: #222;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .header nav a {
+            color: #ff7000;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1rem;
+        }
+
+        .header nav a:hover {
+            color: #fff;
+        }
+
+        .favorites-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .favorite-item {
+            background-color: #222;
+            border-radius: 5px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            color: #ff7000;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            width: 80%;
+            position: relative;
+        }
+
+        .favorite-item button {
+            background-color: #444;
+            border: none;
+            color: #ff7000;
+            font-size: 1.2rem;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .favorite-item button:hover {
+            background-color: #555;
+        }
+
+        .song-info {
+            flex-grow: 1;
+        }
+
+        .song-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .artist-name {
+            font-size: 1rem;
+            color: #bbb;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <h1>Favorites</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="#">Account</a>
+        </nav>
+    </header>
+    <div class="favorites-container">
+        <!-- Example Item -->
+        <!-- Items should be rendered dynamically by Flask -->
+        {% for track in tracks %}
+        <div class="favorite-item">
+            <div class="song-info">
+                <div class="song-title">{{ track[0] }}</div>
+                <div class="artist-name">{{ track[1] }}</div>
+            </div>
+            <button class="remove-favorite" data-id="{{ track[2] }}"><i class="fas fa-times"></i></button>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Handle removing items from favorites
+        document.querySelectorAll('.remove-favorite').forEach(button => {
+            button.addEventListener('click', () => {
+                const itemId = button.getAttribute('data-id');
+                fetch(`/remove_from_favorites`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        'track_id': itemId,
+                    }),
+                }).then(response => {
+                    if (response.ok) {
+                        button.parentElement.remove();
+                    } else {
+                        alert('Failed to remove the item.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

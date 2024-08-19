@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Account</title>
+    <style>
+        body {
+            background-color: #111;
+            color: #ff7000;
+            font-family: sans-serif;
+            margin: 0;
+            padding-top: 60px;
+            /* padding to prevent content overlap with fixed navbar */
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 10px 20px;
+            background-color: #222;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .header nav a {
+            color: #ff7000;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1rem;
+        }
+
+        .header nav a:hover {
+            color: #fff;
+        }
+
+        .account-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            padding: 20px;
+        }
+
+        .account-form {
+            background-color: #222;
+            border-radius: 5px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .account-form h2 {
+            margin-bottom: 20px;
+            color: #ff7000;
+        }
+
+        .account-form label {
+            display: block;
+            color: #ff7000;
+            margin-bottom: 10px;
+        }
+
+        .account-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #ff7000;
+        }
+
+        .account-form button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff7000;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .account-form button:hover {
+            background-color: #e05d00;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <h1>Account</h1>
+        <nav>
+            <a href="index.html">Main</a>
+            <a href="favorites.html">Favorites</a>
+        </nav>
+    </header>
+    <div class="account-container">
+        <form class="account-form">
+            <h2>Change Your Name</h2>
+            <label for="name">New Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your new name" required>
+            <button type="submit">Save</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
