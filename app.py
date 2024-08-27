@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
+import json
+import os
 
 app = Flask(__name__)
 
@@ -21,11 +23,27 @@ def init_db():
     conn.close()  # Close the connection
 
 
-# Route for the main page
+current_dir = os.path.dirname(os.path.abspath(__file__))
+json_path = os.path.join(current_dir, "tracks.json")
+
+
 @app.route("/")
 def index():
-    # Render the main page template
-    return render_template("index.html")
+    try:
+        with open(json_path, "r", encoding="utf-8") as f:
+            tracks = json.load(f)
+    except FileNotFoundError:
+        tracks = []
+        print("File not found")  # Debug message
+    except json.JSONDecodeError:
+        tracks = []
+        print("JSON decode error")  # Debug message
+    return render_template("music.html", tracks=tracks)
+
+
+@app.route("/upload")
+def upload():
+    return render_template("upload.html")
 
 
 # Route to add a track to the favorites

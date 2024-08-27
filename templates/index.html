@@ -6,162 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>Document</title>
-    <style>
-        body {
-            background-color: #111;
-            color: #ff7000;
-            font-family: sans-serif;
-            margin: 0;
-            padding-top: 60px;
-        }
-
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            padding: 10px 20px;
-            background-color: #222;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .header h1 {
-            font-size: 1.8rem;
-            margin: 0;
-        }
-
-        .header nav a {
-            color: #ff7000;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 1rem;
-        }
-
-        .header nav a:hover {
-            color: #fff;
-        }
-
-        .carousel-item img {
-            width: 100%;
-            height: 490px;
-            object-fit: cover;
-        }
-
-        .carousel {
-            width: 990px;
-            margin: 0 auto;
-        }
-
-        .items-container {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 20px;
-            justify-content: center;
-            padding: 20px;
-            max-width: 80%;
-            margin: 0 auto;
-        }
-
-        .item {
-            background-color: #222;
-            border-radius: 5px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #ff7000;
-            font-size: 1rem;
-            position: relative;
-            overflow: hidden;
-            transition: background-color 0.3s;
-        }
-
-        .item:hover {
-            background-color: #333;
-            cursor: pointer;
-            color: #fff;
-        }
-
-        /* Hide controls initially */
-        .controls {
-            display: flex;
-            gap: 15px;
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
-        }
-
-        /* Show controls on item hover */
-        .item:hover .controls {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .controls button {
-            width: 40px;
-            height: 40px;
-            background-color: #1d1d1d;
-            border: none;
-            color: #ff6600;
-            font-size: 1.2rem;
-            /* Smaller icon size */
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .controls button:hover {
-            background-color: #444;
-            transform: scale(1.1);
-        }
-
-        .controls button.favorites {
-            background-color: #ff7000;
-            color: #fff;
-        }
-
-        .controls button.favorites:hover {
-            background-color: #e65c00;
-        }
-
-        .song-info {
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .song-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        .artist-name {
-            font-size: 1rem;
-            color: #bbb;
-        }
-    </style>
+    <link rel="stylesheet" href="../static/main.css">
+    <title>{% block title %}Music Epta{% endblock %}</title>
 </head>
 
 <body>
     <header class="header">
-        <h1>MAIN</h1>
-        <nav>
-            <a href="#">Account</a>
-            <a href="/favorites">Favorites</a>
-        </nav>
+        {% include 'navbar.html' %}
     </header>
+
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -188,26 +41,11 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-    <div class="items-container">
-        <div class="item">
-            <div class="controls">
-                <button class="play-pause" data-audio="audio1"><i class="fas fa-play"></i></button>
-                <form action="/add_to_favorites" method="POST">
-                    <input type="hidden" name="track_title" value="Мюзікк">
-                    <input type="hidden" name="artist_name" value="Злий Репер Зеник">
-                    <button type="submit" class="favorites"><i class="fas fa-heart"></i></button>
-                </form>
-            </div>
 
-            <audio id="audio1" src="../static/music.mp3"></audio>
-
-            <div class="song-info">
-                <div class="song-title">Мюзікк</div>
-                <div class="artist-name">Злий Репер Зеник</div>
-            </div>
-        </div>
-        <!-- Add additional items here as needed -->
-    </div>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
