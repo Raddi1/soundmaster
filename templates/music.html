@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+
+{% block title %}Music Page{% endblock %}
+
+{% block content %}
+<div class="items-container">
+    {% for track in tracks %}
+    <div class="item">
+        <div class="controls">
+            <button class="play-pause" data-audio="audio{{ loop.index }}"><i class="fas fa-play"></i></button>
+            <form action="/add_to_favorites" method="POST">
+                <input type="hidden" name="track_title" value="{{ track.title }}">
+                <input type="hidden" name="artist_name" value="{{ track.artist }}">
+                <button type="submit" class="favorites"><i class="fas fa-heart"></i></button>
+            </form>
+        </div>
+
+        <audio id="audio{{ loop.index }}" src="{{ url_for('static', filename=track.path) }}"></audio>
+
+        <div class="song-info">
+            <div class="song-title">{{ track.title }}</div>
+            <div class="artist-name">{{ track.artist }}</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
