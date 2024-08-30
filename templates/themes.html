@@ -19,23 +19,23 @@
     <button type="button" class="btn btn-dark" onclick="changeTextColor('#FFD700')">Yellow</button>
 
     <script>
-        function changeTextColor(color) {                       // Цей рядок зберігає вибраний колір тексту в локальному сховищі браузера
-            localStorage.setItem('siteTextColor', color);       // setItem('siteTextColor', color);: ця команда зберігає значення кольору (color) під ключем 'siteTextColor'
-            applyTextColor(color);                              // після натиску на кнопку зміни кольору викликається функція "changeTextColor(color)" після чого колір зберігається в 'localStorage', одразу після збереження викликається функція яка змінює колір всього тексту
+        function changeTextColor(color) {                       
+            localStorage.setItem('siteTextColor', color);       
+            applyTextColor(color);                              
         }
 
         function applyTextColor(color) {
-            document.body.style.color = color;                  // зміна тексту для всього <body>
-            const allElements = document.querySelectorAll('*'); // *=вибір всіх елементів
-            allElements.forEach(element => {                    // Цей рядок проходить через всі елементи, знайдені на сторінці, і змінює їхній колір тексту на заданий. Метод forEach() виконує вказану функцію для кожного елемента в списку allElements
+            document.body.style.color = color;                  
+            const allElements = document.querySelectorAll('*'); 
+            allElements.forEach(element => {                    
                 element.style.color = color;
             });
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const savedColor = localStorage.getItem('siteTextColor'); // Отримує збережений колір з локального сховища
+            const savedColor = localStorage.getItem('siteTextColor'); 
             if (savedColor) {
-                applyTextColor(savedColor);                     // Якщо колір знайдено, застосовує його до тексту на сторінці
+                applyTextColor(savedColor);                     
             }
         });
     </script>
