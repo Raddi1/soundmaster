@@ -64,6 +64,23 @@
             });
         });
     </script>
+    <script>
+        function applyTextColor(color) {
+        document.body.style.color = color;
+        const allElements = document.querySelectorAll('*');
+        allElements.forEach(element => {
+            element.style.color = color;
+        });
+    }
+
+    // Застосувати збережений колір при завантаженні сторінки
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedColor = localStorage.getItem('siteTextColor');
+        if (savedColor) {
+            applyTextColor(savedColor);
+        }
+    });
+    </script>
 </body>
 
 </html>
