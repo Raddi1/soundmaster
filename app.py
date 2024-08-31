@@ -5,6 +5,9 @@ import os
 
 app = Flask(__name__)
 
+UPLOAD_FOLDER = "static/audio"
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
 
 # Function to initialize the database and create the 'favorites' table if it doesn't exist
 def init_db():
@@ -41,9 +44,64 @@ def index():
     return render_template("music.html", tracks=tracks)
 
 
-@app.route("/upload")
+def count_files_in_directory(directory):
+    # Get the list of all files and folders in the directory
+    files_and_folders = os.listdir(directory)
+
+    # Count the number of files
+    file_count = sum(
+        1 for item in files_and_folders if os.path.isfile(os.path.join(directory, item))
+    )
+
+    return file_count
+
+
+@app.route("/upload", methods=["GET", "POST"])
 def upload():
+    if request.method == "POST":
+        if "file" not in request.files:
+            return "No file part"
+
+        file = request.files["file"]
+
+        if file.filename == "":
+            return "No selected file"
+
+        if file and (file.filename.endswith(".mp3") or file.filename.endswith(".wav")):
+            count = count_files_in_directory(app.config["UPLOAD_FOLDER"])
+            extension = ".mp3" if file.filename.endswith(".mp3") else ".wav"
+            filename = f"track{count}{extension}"
+            filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+            file.save(filepath)
+
+            try:
+                with open(json_path, "r", encoding="utf-8") as f:
+                    tracks = json.load(f)
+            except (FileNotFoundError, json.JSONDecodeError):
+                tracks = []
+
+            # Add new track info to the list
+            track_info = {
+                "title": request.form.get("title"),
+                "artist": request.form.get("artist"),
+                "path": f"audio/{filename}",  # relative path to the file in static
+            }
+            tracks.append(track_info)
+
+            # Save updated tracks list back to the JSON file
+            with open(json_path, "w", encoding="utf-8") as f:
+                json.dump(tracks, f, ensure_ascii=False, indent=4)
+
+            return redirect(url_for("index"))
+        else:
+            return "Invalid file type. Only MP3 and WAV files are allowed."
+
     return render_template("upload.html")
+
+
+@app.route("/themes")
+def change_theme():
+    return render_template("themes.html")
 
 
 # Route to add a track to the favorites
