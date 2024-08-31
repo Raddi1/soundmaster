@@ -7,20 +7,47 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/main.css">
     <title>{% block title %}Music Epta{% endblock %}</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column; 
+            justify-content: center;
+            align-items: center;
+            height: 50vh; 
+        }
+
+        .container h1 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+        }
+
+        .button-group button {
+            margin: 5px; 
+        }
+    </style>
 </head>
 <body>
     <header class="header">
         {% include 'navbar.html' %}
     </header>
-    <h1 style="text-align: center; margin-top: 20px">Choose a Text Color for the Site</h1>
-    <button style="margin-left: 600px" type="button" class="btn btn-dark" onclick="changeTextColor('#FF5733')">Red</button>
-    <button type="button" class="btn btn-dark" onclick="changeTextColor('#1E90FF')">Blue</button>
-    <button type="button" class="btn btn-dark" onclick="changeTextColor('#47C131')">Green</button>
-    <button type="button" class="btn btn-dark" onclick="changeTextColor('#FFD700')">Yellow</button>
-
+    <div class="container">
+        <h1>Choose a Text Color for the Site</h1>
+        <div class="button-group">
+            <button type="button" class="btn btn-dark" onclick="changeTextColor('#FF5733')">Red</button>
+            <button type="button" class="btn btn-dark" onclick="changeTextColor('#1E90FF')">Blue</button>
+            <button type="button" class="btn btn-dark" onclick="changeTextColor('#47C131')">Green</button>
+            <button type="button" class="btn btn-dark" onclick="changeTextColor('#FFD700')">Yellow</button>
+            <button type="button" class="btn btn-dark" onclick="changeTextColor('#ff7000')">Reset to default</button>
+        </div>
+    </div>
     <script>
         function changeTextColor(color) {                       
-            localStorage.setItem('siteTextColor', color);       
+            localStorage.setItem('siteTextColor', color);      
             applyTextColor(color);                              
         }
 
@@ -35,7 +62,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const savedColor = localStorage.getItem('siteTextColor'); 
             if (savedColor) {
-                applyTextColor(savedColor);                     
+                applyTextColor(savedColor);                    
             }
         });
     </script>
