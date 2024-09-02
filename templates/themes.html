@@ -17,7 +17,7 @@
         }
 
         .container h1 {
-            margin-bottom: 20px;
+            margin-bottom: 20px; 
             text-align: center;
         }
 
@@ -47,22 +47,22 @@
     </div>
     <script>
         function changeTextColor(color) {                       
-            localStorage.setItem('siteTextColor', color);      
+            localStorage.setItem('siteTextColor', color);       
             applyTextColor(color);                              
         }
 
         function applyTextColor(color) {
             document.body.style.color = color;                  
             const allElements = document.querySelectorAll('*'); 
-            allElements.forEach(element => {                    
+            allElements.forEach(element => {                  
                 element.style.color = color;
             });
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const savedColor = localStorage.getItem('siteTextColor'); 
+            const savedColor = localStorage.getItem('siteTextColor');
             if (savedColor) {
-                applyTextColor(savedColor);                    
+                applyTextColor(savedColor);                     
             }
         });
     </script>
